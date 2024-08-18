@@ -18,15 +18,15 @@ except Exception as e:
 
 # Load the data
 try:
-    df_final2 = pd.read_csv("C:\\Users\\user\\documents\\moringa\\capstone\\Medicine-Recommendation-system\\Dataset\\Symptom-severity.csv")
-    df_medications = pd.read_csv("C:\\Users\\user\\documents\\moringa\\capstone\\Medicine-Recommendation-system\\Dataset\\medications.csv")
+    df_final2 = pd.read_csv("trained.csv")
+    df_medications = pd.read_csv("Dataset/medications.csv")
 except Exception as e:
     st.error(f"Error loading data: {e}")
     st.stop()
 
 # Prepare the data
 X = df_final2.filter(like='Symptom')  # All columns containing 'Symptom'
-y_disease = df_medications['Disease']  # Target variable for disease
+y_disease = df_final2['Disease']  # Target variable for disease
 y_medications = df_medications  # Target variable for medications
 
 # Label encoding
@@ -44,41 +44,41 @@ st.title("Disease Prediction and Medication Recommendation System")
 
 # Description
 st.markdown("""
-This application allows users to input their symptoms and receive predictions on possible diseases and recommended medications. 
-Please select the symptoms you are experiencing from the list below and click the "Predict Disease" button to see the results.
+This application allows users to input their symptoms and receive predictions on possible diseases and recommended medications.
+Please input the symptoms you are experiencing (comma-separated) and click the "Predict Disease" button to see the results.
 """)
 
 # User input for symptoms
-symptom_input = []
-for symptom in X.columns:
-    if st.checkbox(f"{symptom}", key=symptom):
-        symptom_input.append(1)
-    else:
-        symptom_input.append(0)
+user_input = st.text_input("Enter your symptoms (comma-separated):")
 
-# Convert the user input into a DataFrame
-input_df = pd.DataFrame([symptom_input], columns=X.columns)
+# Process user input
+if user_input:
+    input_symptoms = [symptom.strip() for symptom in user_input.split(',')]  # List of input symptoms
 
-# Predict disease
-if st.button("Predict Disease"):
-    try:
-        predicted_disease = disease_model.predict(input_df)
-        st.subheader("Predicted Disease")
-        st.write(f"The predicted disease is: **{predicted_disease[0]}**")
+    # Create an input vector based on the symptoms present in the dataset
+    input_vector = [1 if symptom in input_symptoms else 0 for symptom in X.columns]
+    input_df = pd.DataFrame([input_vector], columns=X.columns)
 
-        # Predict medications based on the disease
-        predicted_medications = medication_model.predict(input_df)
+    # Predict disease
+    if st.button("Predict Disease"):
+        try:
+            predicted_disease = disease_model.predict(input_df)
+            st.subheader("Predicted Disease")
+            st.write(f"The predicted disease is: **{predicted_disease[0]}**")
 
-        st.subheader("Recommended Medications")
-        recommended_meds = df_medications.columns[np.where(predicted_medications[0] == 1)]
-        if recommended_meds.size > 0:
-            for med in recommended_meds:
-                st.write(f"- {med}")
-        else:
-            st.write("No specific medications recommended.")
+            # Predict medications based on the disease
+            predicted_medications = medication_model.predict(input_df)
 
-    except Exception as e:
-        st.error(f"Error making predictions: {e}")
+            st.subheader("Recommended Medications")
+            recommended_meds = df_medications.columns[np.where(predicted_medications[0] == 1)]
+            if recommended_meds.size > 0:
+                for med in recommended_meds:
+                    st.write(f"- {med}")
+            else:
+                st.write("No specific medications recommended.")
+
+        except Exception as e:
+            st.error(f"Error making predictions: {e}")
 
 # Display the accuracy of the model
 try:
@@ -90,6 +90,7 @@ try:
     st.write(f"Medication Prediction Accuracy: **{medications_accuracy:.2f}**")
 except Exception as e:
     st.error(f"Error calculating accuracy: {e}")
+
 
 
 
