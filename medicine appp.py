@@ -19,7 +19,7 @@ except Exception as e:
 # Load the data
 try:
     df_final2 = pd.read_csv("trained.csv")
-    df_medications = pd.read_csv("Dataset/medications.csv")
+    df_medications = df_final2.filter(like='[')
 except Exception as e:
     st.error(f"Error loading data: {e}")
     st.stop()
