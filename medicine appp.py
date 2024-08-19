@@ -18,23 +18,23 @@ except Exception as e:
 
 # Load the data
 try:
-    df_final2 = pd.read_csv("trained.csv")
+    df_final2 = pd.read_csv("trained.csv", low_memory=False)  # Setting low_memory=False to avoid the warning
     df_medications = df_final2.filter(like='[')
 except Exception as e:
     st.error(f"Error loading data: {e}")
     st.stop()
 
 # Prepare the data
-X = df_final2.filter(like='Symptom')  # All columns containing 'Symptom'
+X = df_final2.filter(like='Symptom').copy()  # Make a copy of the DataFrame
 y_disease = df_final2['Disease']  # Target variable for disease
 y_medications = df_medications  # Target variable for medications
 
 # Label encoding
 label_encoder = LabelEncoder()
 for column in X.columns:
-    if X[column].dtype == 'object':  # Check if the column is categorical
+    if X[column].dtype == 'object' or X[column].dtype == 'float64':  # Check if the column is categorical or float
         try:
-            X.loc[:, column] = label_encoder.fit_transform(X[column].astype(str))  # Ensure consistent data type 
+            X.loc[:, column] = label_encoder.fit_transform(X[column].astype(str))  # Ensure consistent data type
         except Exception as e:
             st.error(f"Error encoding column {column}: {e}")
             st.stop()
@@ -90,6 +90,10 @@ try:
     st.write(f"Medication Prediction Accuracy: **{medications_accuracy:.2f}**")
 except Exception as e:
     st.error(f"Error calculating accuracy: {e}")
+
+
+
+
 
 
 
