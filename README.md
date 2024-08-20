@@ -1,6 +1,6 @@
 # Medicine-Recommendation-system
 A medicine recommendation system based on the diseases and symptoms the patient may have
-![Alt text]("C:\Users\Adan\Downloads\Side Effect Solutions to Blood Pressure Drugs.)jpeg")
+img< src ='https://i.pinimg.com/564x/79/c7/77/79c777a369ddb7092acfec9047bdc2e9.jpg'>
 
 ## Overview
 The healthcare industry is undergoing significant transformation with the integration of technology, particularly in areas like accessibility, efficiency, and personalized care. This project focuses on creating a recommendation system that can predict diseases based on user-input symptoms, provide detailed descriptions of these diseases, suggest preventive measures, and recommend appropriate medications. The aim is to offer timely and accurate medical advice, thereby reducing the need for immediate hospital visits and improving overall health outcomes.
