@@ -1,6 +1,6 @@
 # Medicine-Recommendation-system
-A medicine recommendation system based on the diseases and symptoms the patient may have
-![Alt text](https://i.pinimg.com/564x/79/c7/77/79c777a369ddb7092acfec9047bdc2e9.jpg)
+A medicine recommendation system based on the diseases and symptoms the patient may have.
+<img src = "https://github.com/William-Itotia/Medicine-Recommendation-system/blob/main/static/StockCake-Digital%20Health%20Concept_1723969232.jpg?raw=true">
 
 ## Overview
 The healthcare industry is undergoing significant transformation with the integration of technology, particularly in areas like accessibility, efficiency, and personalized care. This project focuses on creating a recommendation system that can predict diseases based on user-input symptoms, provide detailed descriptions of these diseases, suggest preventive measures, and recommend appropriate medications. The aim is to offer timely and accurate medical advice, thereby reducing the need for immediate hospital visits and improving overall health outcomes.
@@ -16,14 +16,13 @@ Accessing timely and accurate medical advice remains a challenge for many due to
 * To integrate a user-friendly interface for individuals to input their symptoms.
 
 ## Data Understanding 
-Five datasets were used:
+Five datasets were used: 
+* symptoms_df: Contains diseases and associated symptoms.
+* precautions_df: Lists diseases with their corresponding precautions.
+* descriptions_df: Provides detailed descriptions of diseases.
+* medications_df: Contains recommended medications for each disease.
+* training_df: Used for training the machine learning model, linking symptoms to diseases.
 
-symptoms_df: Contains diseases and associated symptoms.
-precautions_df: Lists diseases with their corresponding precautions.
-descriptions_df: Provides detailed descriptions of diseases.
-medications_df: Contains recommended medications for each disease.
-training_df: Used for training the machine learning model, linking symptoms to diseases.
-Missing Values
 Missing values are present in the symptoms dataset, which are not dropped due to varying symptom occurrences in different diseases. Missing precautions are filled with 'None'.
 
 ## Data Preparation
@@ -40,7 +39,11 @@ Several machine learning models are tested, including:
 * K-Neighbors Classifier
 * Multinomial Naive Bayes
 * Logistic Regression
-The SVC model was used in this project
+
+The SVC model was used in this project.
+
+## Deployment
+Steamlit was used to deploy this application.You can access it here:https://medicine-recommendation-system-42luxseofvhqy7ad97zvsk.streamlit.app/
 
 ## Conclusion
 The recommendation system effectively predicts diseases based on symptoms and provides comprehensive information including precautions and medications. The next steps involve refining the user interface, integrating the system into healthcare platforms, and continually updating the model with new medical data.
